@@ -6,7 +6,7 @@ export default async function decorate(block) {
     return;
   }
 
-  const sheetUrl = link.href.split('.json')[0]; 
+  const sheetUrl = link.href.split('.json')[0];
   block.innerHTML = '';
 
   const dropdown = document.createElement('select');
@@ -25,13 +25,56 @@ export default async function decorate(block) {
 
   block.append(dropdown, tableWrapper);
 
+  function renderTable(rows) {
+    tableWrapper.innerHTML = '';
+
+    if (!rows.length) {
+      tableWrapper.textContent = 'No data available';
+      return;
+    }
+
+    const table = document.createElement('table');
+
+    const thead = document.createElement('thead');
+    const headerRow = document.createElement('tr');
+
+    Object.keys(rows[0]).forEach((key) => {
+      const th = document.createElement('th');
+      th.textContent = key;
+      headerRow.appendChild(th);
+    });
+
+    thead.appendChild(headerRow);
+    table.appendChild(thead);
+
+    const tbody = document.createElement('tbody');
+
+    rows.forEach((row) => {
+      const bodyRow = document.createElement('tr');
+
+      Object.values(row).forEach((val) => {
+        const td = document.createElement('td');
+        td.textContent = val;
+        bodyRow.appendChild(td);
+      });
+
+      tbody.appendChild(bodyRow);
+    });
+
+    table.appendChild(tbody);
+    tableWrapper.appendChild(table);
+  }
+
   async function fetchSheet(sheetName) {
     try {
       const url = `${sheetUrl}.json?sheet=${sheetName}`;
-      console.log('Fetching:', url);
+      const response = await fetch(url);
 
-      const resp = await fetch(url);
-      const json = await resp.json();
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const json = await response.json();
 
       if (!json.data) {
         tableWrapper.textContent = 'No data found';
@@ -39,51 +82,14 @@ export default async function decorate(block) {
       }
 
       renderTable(json.data);
-    } catch (e) {
+    } catch (error) {
       tableWrapper.textContent = 'Error loading data';
-      console.error(e);
     }
-  }
-
-  function renderTable(rows) {
-    tableWrapper.innerHTML = '';
-
-    const table = document.createElement('table');
-
-    const thead = document.createElement('thead');
-    const tr = document.createElement('tr');
-
-    Object.keys(rows[0]).forEach((key) => {
-      const th = document.createElement('th');
-      th.textContent = key;
-      tr.appendChild(th);
-    });
-
-    thead.appendChild(tr);
-    table.appendChild(thead);
-
-    const tbody = document.createElement('tbody');
-
-    rows.forEach((row) => {
-      const tr = document.createElement('tr');
-
-      Object.values(row).forEach((val) => {
-        const td = document.createElement('td');
-        td.textContent = val;
-        tr.appendChild(td);
-      });
-
-      tbody.appendChild(tr);
-    });
-
-    table.appendChild(tbody);
-    tableWrapper.appendChild(table);
   }
 
   dropdown.addEventListener('change', () => {
     fetchSheet(dropdown.value);
   });
 
-  // load first
   fetchSheet('data');
 }
