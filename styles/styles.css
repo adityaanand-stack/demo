@@ -75,7 +75,9 @@ body {
   display: none;
   margin: 0;
   background-color: var(--background-color);
-  /*color: var(--text-color);*/
+
+  /* color: var(--text-color); */
+
   font-family: var(--body-font-family);
   font-size: var(--body-font-size-m);
   line-height: 1.6;
@@ -259,8 +261,9 @@ main .section.highlight {
   padding: 40px 0;
 }
 
-/* <--------------------------Custome CSS--------------------> */
-.button{
+/* -------------------------- Custom CSS -------------------------- */
+
+.button {
   display: inline-block;
   padding: 14px 28px;
   background-color: pink !important;
@@ -275,7 +278,7 @@ main .section.highlight {
   background-color: red !important;
 }
 
-#this-is-h1{
+#this-is-h1 {
   color: red;
 }
 
@@ -286,17 +289,17 @@ img {
 }
 
 .target1 .default-content-wrapper > p {
-  color: rgb(47, 37, 230);
+  color: rgb(47 37 230);
 }
 
-.target1 .default-content-wrapper{
+.target1 .default-content-wrapper {
   background-color: aqua;
 }
 
 .target2 .default-content-wrapper > p {
-  color: rgb(232, 16, 16);
+  color: rgb(232 16 16);
 }
 
-.target2 .default-content-wrapper{
-  background-color: rgb(0, 255, 81);
+.target2 .default-content-wrapper {
+  background-color: rgb(0 255 81);
 }
