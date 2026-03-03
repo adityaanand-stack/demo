@@ -215,6 +215,12 @@ button.secondary {
   color: var(--text-color);
 }
 
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+
 main img {
   max-width: 100%;
   width: auto;
@@ -280,12 +286,6 @@ main .section.highlight {
 
 #this-is-h1 {
   color: red;
-}
-
-img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 12px;
 }
 
 .target1 .default-content-wrapper > p {
